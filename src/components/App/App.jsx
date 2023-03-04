@@ -1,21 +1,25 @@
 import { Navigation } from 'components/Navigation/Navigation';
-import Contacts from 'components/pages/Contacts';
-import Home from 'components/pages/Home';
-import Login from 'components/pages/Login';
-import Register from 'components/pages/Register';
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 
+const HomePage = lazy(() => import('components/pages/Home'));
+const RegisterPage = lazy(() => import('components/pages/Register'));
+const LoginPage = lazy(() => import('components/pages/Login'));
+const ContactsPage = lazy(() => import('components/pages/Contacts'));
+
 export const App = () => {
   return (
+    <Suspense fallback={<h2>Loading...</h2>}>
     <div>
-      <Navigation/> 
+      <Navigation />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/contacts" element={<ContactsPage />} />
       </Routes>
     </div>
+    </Suspense>
   );
 };
