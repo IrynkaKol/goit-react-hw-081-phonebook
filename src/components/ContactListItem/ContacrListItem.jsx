@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Item,
   Contact,
@@ -10,6 +11,7 @@ export const ContactListItem = ({ id, name: nameValue, number: numberValue, hand
   const [isEdit, setIsEdit] = useState(false);
   const [name, setName] = useState(nameValue);
   const [number, setNumber] = useState(numberValue);
+  const dispatch = useDispatch()
 
   const handleChangeMode = () => {
     if (isEdit) {
