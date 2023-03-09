@@ -8,17 +8,21 @@ import {
   Button,
 } from '../ContactList/ContactList.styled';
 
-
-export const ContactListItem = ({ id, name: nameValue, number: numberValue, handleDelete }) => {
+export const ContactListItem = ({
+  id,
+  name: nameValue,
+  number: numberValue,
+  handleDelete,
+}) => {
   const [isEdit, setIsEdit] = useState(false);
   const [name, setName] = useState(nameValue);
   const [number, setNumber] = useState(numberValue);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleChangeMode = () => {
     if (isEdit) {
       setIsEdit(prev => !prev);
-      dispatch(editContact({id, name, number}))
+      dispatch(editContact({ id, name, number }));
       return;
     }
     setIsEdit(prev => !prev);
@@ -41,11 +45,25 @@ export const ContactListItem = ({ id, name: nameValue, number: numberValue, hand
     <Item key={id}>
       <Contact>
         <Wrapper>
-          {isEdit ? <input onChange={handleChange} name="name" type="text" value={name} /> : <span>{name}: </span>}
+          {isEdit ? (
+            <input
+              onChange={handleChange}
+              name="name"
+              type="text"
+              value={name}
+            />
+          ) : (
+            <span>{name}: </span>
+          )}
 
           <br />
           {isEdit ? (
-            <input onChange={handleChange} name="number" type="text" value={number} />
+            <input
+              onChange={handleChange}
+              name="number"
+              type="text"
+              value={number}
+            />
           ) : (
             <span>{number}: </span>
           )}
