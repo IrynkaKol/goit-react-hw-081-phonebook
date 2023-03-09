@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  List,
-  Item,
-  Contact,
-  Avatar,
-  Wrapper,
-  Button,
-} from './ContactList.styled';
+import { List } from './ContactList.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts, selectStatusFilter } from 'redux/selector';
 import { deleteContact, fetchContacts } from 'redux/operations';
 import { useEffect } from 'react';
+import { ContactListItem } from 'components/ContactListItem/ContacrListItem';
 
 function ContactList() {
   const contacts = useSelector(selectContacts);
@@ -31,18 +25,9 @@ function ContactList() {
 
   return (
     <List>
-      {getVisibleContacts().map(({ id, name, number, avatar }) => (
-        <Item key={id}>
-          <Contact>
-            <Avatar width={50} src={avatar} alt="avatar" />
-            <Wrapper>
-              <span>{name}: </span>
-              <br />
-              <span>{number} </span>
-            </Wrapper>
-          </Contact>
-          <Button onClick={() => handleDelete(id)}>Delete</Button>
-        </Item>
+      {getVisibleContacts().map(({ id, name, number }) => (
+        <ContactListItem key={id} name={name} number={number} 
+        handleDelete={handleDelete}/>
       ))}
     </List>
   );

@@ -1,12 +1,25 @@
-import { NavLink } from 'react-router-dom';
+import { useAuth } from 'components/hooks';
+import { Suspense } from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
+
 
 export const Navigation = () => {
-    return (
-        <nav>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/register">Register</NavLink>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/contacts">Contacts</NavLink>
-        </nav>
-    )
-}
+  const { isLoggedIn } = useAuth();
+
+  return (
+    <nav>
+      <NavLink to="/">Home</NavLink>
+      {isLoggedIn ? (
+        <NavLink to="/contacts">Contacts</NavLink>
+      ) : (
+        <>
+          <NavLink to="/register">Register</NavLink>
+          <NavLink to="/login">Login</NavLink>
+        </>
+      )}
+      <Suspense>
+        <Outlet/>
+      </Suspense>
+    </nav>
+  );
+};

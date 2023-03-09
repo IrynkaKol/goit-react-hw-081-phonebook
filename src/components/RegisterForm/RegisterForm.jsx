@@ -1,10 +1,40 @@
+import { useReducer } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/auth/operations';
 import { Form, Label } from './RegisterForm.styled';
 
-
+function reducer(state, action) {
+  switch (action.type) {
+    case 'name':
+      return { ...state, name: action.payload };
+    case 'email':
+      return { ...state, email: action.payload };
+    case 'password':
+      return { ...state, password: action.payload };
+      default:
+      return state
+  }
+}
 export const RegisterForm = () => {
+
+  const [state, setState] = useReducer(reducer, {
+    name: '',
+    email: '',
+    password: '',
+  })
+
   const dispatch = useDispatch();
+
+  const handleChangeInput = e => {
+    setState({ type: e.target.name, payload: e.target.value });
+    console.log(state);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(register(state));
+  };
+  /*const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -17,21 +47,21 @@ export const RegisterForm = () => {
       })
     );
     form.reset()
-  };
+  };*/
 
   return (
     <Form onSubmit={handleSubmit} autoComplete="off">
-      <Label>
+      <Label htmlFor=''>
         Username
-        <input type="text" name="name" />
+        <input onChange={handleChangeInput} type="text" name="name" />
       </Label>
-      <Label>
+      <Label htmlFor=''>
         Email
-        <input type="email" name="email" />
+        <input onChange={handleChangeInput} type="email" name="email" />
       </Label>
-      <Label>
+      <Label htmlFor=''>
         Password
-        <input type="password" name="password" />
+        <input onChange={handleChangeInput} type="password" name="password" />
       </Label>
       <button type="submit">Register</button>
     </Form>
