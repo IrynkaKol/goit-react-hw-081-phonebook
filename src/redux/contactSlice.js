@@ -4,11 +4,14 @@ import {
   addContact,
   deleteContact,
   toggleCompleted,
+  editContact,
 } from './operations';
 
 const extraActions = [
   fetchContacts,
   addContact,
+  editContact,
+
   deleteContact,
   toggleCompleted,
 ];
@@ -30,6 +33,13 @@ const contactsSlice = createSlice({
       .addCase(addContact.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
+      .addCase(editContact.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          contact => contact.id === action.payload.id
+        );
+        state.items.splice(index, 1, action.payload);
+      })
+
       .addCase(deleteContact.fulfilled, (state, action) => {
         const index = state.items.findIndex(
           contact => contact.id === action.payload.id
